@@ -2,16 +2,18 @@ import { useState } from 'react'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import '../styles/index.css'
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 function App() {
   return (
-    <div className="h-full flex items-center justify-center bg-slate-900 text-white">
-      <h1 className="text-3xl font-bold">
-        Client Project Management App
+    <DashboardLayout>
+      <h1 className="text-2xl font-semibold">
+        Welcome to the Dashboard
       </h1>
-    </div>
+    </DashboardLayout>
   );
 }
 
 export default App;
+
 

@@ -3,6 +3,7 @@ import { getClients } from "./api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createClient } from "./api";
 import { deleteClient } from "./api";
+import { updateClient } from "./api";
 import type { Client } from "../../types/client";
 import type { ClientFormValues } from "./schema";
 
@@ -38,5 +39,23 @@ export const useDeleteClient = () => {
     },
   });
 };
+
+export const useUpdateClient = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: ClientFormValues;
+    }) => updateClient(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["clients"] });
+    },
+  });
+};
+
 
 

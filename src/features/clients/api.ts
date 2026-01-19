@@ -19,3 +19,11 @@ export const createClient = async (
 export const deleteClient = async (id: number): Promise<void> => {
   await api.delete(`/clients/${id}`);
 };
+
+export const updateClient = async (
+  id: number,
+  client: Partial<Omit<Client, "id" | "createdAt">>
+): Promise<Client> => {
+  const { data } = await api.patch<Client>(`/clients/${id}`, client);
+  return data;
+};

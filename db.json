@@ -16,7 +16,7 @@
   "clients": [
     {
       "name": "Acme Corporation",
-      "email": "contact@acme.com",
+      "email": "contact@acmee.com",
       "phone": "+34 600 123 456",
       "company": "Acme Corp",
       "createdAt": "2026-01-15T10:00:00.000Z",

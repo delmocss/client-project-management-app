@@ -3,30 +3,54 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { clientSchema } from "../schema";
 import type { ClientFormValues } from "../schema";
 import { useCreateClient } from "../hooks";
+import { useUpdateClient } from "../hooks";
+import type { Client } from "../../../types/client";
 
 interface Props {
+  initialData?: Client;
   onClose: () => void;
 }
 
-const CreateClientForm = ({ onClose }: Props) => {
+const ClientForm = ({ initialData, onClose }: Props) => {
+  const isEdit = Boolean(initialData);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ClientFormValues>({
     resolver: zodResolver(clientSchema),
+    defaultValues: initialData
+      ? {
+          name: initialData.name,
+          email: initialData.email,
+          phone: initialData.phone,
+          company: initialData.company,
+        }
+      : undefined,
   });
 
-  const { mutateAsync } = useCreateClient();
+  const createMutation = useCreateClient();
+  const updateMutation = useUpdateClient();
 
   const onSubmit = async (data: ClientFormValues) => {
-    await mutateAsync(data);
+    if (isEdit && initialData) {
+      await updateMutation.mutateAsync({
+        id: initialData.id,
+        data,
+      });
+    } else {
+      await createMutation.mutateAsync(data);
+    }
+
     onClose();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h2 className="text-lg font-semibold">New Client</h2>
+      <h2 className="text-lg font-semibold">
+        {isEdit ? "Edit Client" : "New Client"}
+      </h2>
 
       <div>
         <input
@@ -83,11 +107,15 @@ const CreateClientForm = ({ onClose }: Props) => {
           disabled={isSubmitting}
           className="bg-slate-900 text-white px-4 py-2 rounded disabled:opacity-50"
         >
-          {isSubmitting ? "Creating..." : "Create"}
+          {isSubmitting
+            ? "Saving..."
+            : isEdit
+            ? "Save changes"
+            : "Create"}
         </button>
       </div>
     </form>
   );
 };
 
-export default CreateClientForm;
+export default ClientForm;

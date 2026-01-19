@@ -1,17 +1,21 @@
 import { useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
+import Modal from "../../components/ui/Modal";
+import ConfirmDialog from "../../components/ui/ConfirmDialog";
+
 import { useClients } from "../../features/clients/hooks";
 import { useDeleteClient } from "../../features/clients/hooks";
-import Modal from "../../components/ui/Modal";
-import CreateClientForm from "../../features/clients/components/CreateClientForm";
-import ConfirmDialog from "../../components/ui/ConfirmDialog";
+
+import ClientForm from "../../features/clients/components/ClientForm";
 import type { Client } from "../../types/client";
 
 const ClientsPage = () => {
-  const { data, isLoading } = useClients();
+  // 🔒 HOOKS (TODOS DENTRO DEL COMPONENTE)
+  const { data: clients, isLoading, isError } = useClients();
   const deleteMutation = useDeleteClient();
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
   const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
 
   const handleDelete = async () => {
@@ -23,6 +27,7 @@ const ClientsPage = () => {
   return (
     <DashboardLayout>
       <div className="space-y-4">
+        {/* HEADER */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Clients</h1>
 
@@ -34,13 +39,29 @@ const ClientsPage = () => {
           </button>
         </div>
 
-        {isLoading && <p>Loading clients...</p>}
-
-        {data && data.length === 0 && (
-          <p className="text-gray-500">No clients yet.</p>
+        {/* LOADING */}
+        {isLoading && (
+          <div className="bg-white p-4 rounded border">
+            Loading clients...
+          </div>
         )}
 
-        {data && data.length > 0 && (
+        {/* ERROR */}
+        {isError && (
+          <div className="bg-white p-4 rounded border text-red-600">
+            Error loading clients
+          </div>
+        )}
+
+        {/* EMPTY */}
+        {!isLoading && clients && clients.length === 0 && (
+          <div className="bg-white p-4 rounded border text-gray-500">
+            No clients found.
+          </div>
+        )}
+
+        {/* TABLE */}
+        {clients && clients.length > 0 && (
           <div className="bg-white rounded border overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-gray-100 text-left">
@@ -52,14 +73,23 @@ const ClientsPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((client) => (
-                  <tr key={client.id} className="border-t">
+                {clients.map((client) => (
+                  <tr
+                    key={client.id}
+                    className="border-t hover:bg-gray-50"
+                  >
                     <td className="p-3">{client.name}</td>
                     <td className="p-3">{client.email}</td>
                     <td className="p-3">
                       {client.company ?? "-"}
                     </td>
-                    <td className="p-3 text-sm">
+                    <td className="p-3 space-x-2 text-sm">
+                      <button
+                        onClick={() => setClientToEdit(client)}
+                        className="text-blue-600 hover:underline"
+                      >
+                        Edit
+                      </button>
                       <button
                         onClick={() => setClientToDelete(client)}
                         className="text-red-600 hover:underline"
@@ -78,11 +108,21 @@ const ClientsPage = () => {
       {/* CREATE */}
       {isCreateOpen && (
         <Modal onClose={() => setIsCreateOpen(false)}>
-          <CreateClientForm onClose={() => setIsCreateOpen(false)} />
+          <ClientForm onClose={() => setIsCreateOpen(false)} />
         </Modal>
       )}
 
-      {/* DELETE CONFIRM */}
+      {/* EDIT */}
+      {clientToEdit && (
+        <Modal onClose={() => setClientToEdit(null)}>
+          <ClientForm
+            initialData={clientToEdit}
+            onClose={() => setClientToEdit(null)}
+          />
+        </Modal>
+      )}
+
+      {/* DELETE */}
       {clientToDelete && (
         <Modal onClose={() => setClientToDelete(null)}>
           <ConfirmDialog

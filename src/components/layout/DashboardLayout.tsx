@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 interface Props {
   children: ReactNode;
@@ -8,11 +8,13 @@ interface Props {
 
 const DashboardLayout = ({ children }: Props) => {
   return (
-    <div className="flex h-full bg-slate-100">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Navbar />
-        <main className="p-6 flex-1 overflow-auto">
+    <div className="h-screen flex flex-col">
+      <Navbar />
+
+      <div className="flex flex-1">
+        <Sidebar />
+
+        <main className="flex-1 bg-gray-100 p-6 overflow-y-auto">
           {children}
         </main>
       </div>

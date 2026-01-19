@@ -13,6 +13,9 @@ const ClientsPage = () => {
     // 🔒 HOOKS (TODOS DENTRO DEL COMPONENTE)
     const { data: clients, isLoading, isError } = useClients();
     const [search, setSearch] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 5;
+
 
     const deleteMutation = useDeleteClient();
 
@@ -33,6 +36,14 @@ const ClientsPage = () => {
             client.email.toLowerCase().includes(term)
         );
     });
+    const totalItems = filteredClients?.length ?? 0;
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+    const paginatedClients = filteredClients?.slice(
+        (currentPage - 1) * ITEMS_PER_PAGE,
+        currentPage * ITEMS_PER_PAGE
+    );
+
 
 
     return (
@@ -52,7 +63,11 @@ const ClientsPage = () => {
                         type="text"
                         placeholder="Search by name or email..."
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setCurrentPage(1);
+                        }}
+
                         className="w-full max-w-sm border p-2 rounded"
                     />
                 </div>
@@ -91,7 +106,8 @@ const ClientsPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredClients?.map((client) => (
+                                {paginatedClients?.map((client) => (
+
 
                                     <tr
                                         key={client.id}
@@ -122,6 +138,30 @@ const ClientsPage = () => {
                         </table>
                     </div>
                 )}
+                {totalPages > 1 && (
+                    <div className="flex justify-end items-center gap-2">
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage((p) => p - 1)}
+                            className="px-3 py-1 border rounded disabled:opacity-50"
+                        >
+                            Prev
+                        </button>
+
+                        <span className="text-sm">
+                            Page {currentPage} of {totalPages}
+                        </span>
+
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage((p) => p + 1)}
+                            className="px-3 py-1 border rounded disabled:opacity-50"
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
+
             </div>
 
             {/* CREATE */}

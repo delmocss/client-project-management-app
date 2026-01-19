@@ -13,6 +13,7 @@ interface User {
   role: "admin" | "user";
 }
 
+
 interface JwtPayload {
   sub: number;
 }

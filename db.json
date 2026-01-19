@@ -5,6 +5,12 @@
       "password": "$2a$10$/y7G53t5KMJfQ0giWlXRJeSGcZ6xvrCgV88ohLTFFZrv4yy/mveqK",
       "role": "admin",
       "id": 1
+    },
+    {
+      "email": "user@test.com",
+      "password": "$2a$10$UKaoPlt2Wf04W0KCIa3C0OhRBfcXXKaNZ3CfaPvx1hZB7HUUpoipG",
+      "role": "user",
+      "id": 2
     }
   ],
   "clients": [],

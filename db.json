@@ -13,7 +13,30 @@
       "id": 2
     }
   ],
-  "clients": [],
+  "clients": [
+    {
+      "name": "Acme Corporation",
+      "email": "contact@acme.com",
+      "phone": "+34 600 123 456",
+      "company": "Acme Corp",
+      "createdAt": "2026-01-15T10:00:00.000Z",
+      "id": 1
+    },
+    {
+      "name": "Globex",
+      "email": "info@globex.com",
+      "company": "Globex Corporation",
+      "createdAt": "2026-01-15T11:00:00.000Z",
+      "id": 2
+    },
+    {
+      "name": "Initech",
+      "email": "hello@initech.com",
+      "company": "Initech",
+      "createdAt": "2026-01-15T12:00:00.000Z",
+      "id": 3
+    }
+  ],
   "projects": [],
   "tasks": []
 }

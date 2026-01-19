@@ -1,12 +1,24 @@
 import { useState } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { useClients } from "../../features/clients/hooks";
+import { useDeleteClient } from "../../features/clients/hooks";
 import Modal from "../../components/ui/Modal";
 import CreateClientForm from "../../features/clients/components/CreateClientForm";
+import ConfirmDialog from "../../components/ui/ConfirmDialog";
+import type { Client } from "../../types/client";
 
 const ClientsPage = () => {
   const { data, isLoading } = useClients();
-  const [isOpen, setIsOpen] = useState(false);
+  const deleteMutation = useDeleteClient();
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
+
+  const handleDelete = async () => {
+    if (!clientToDelete) return;
+    await deleteMutation.mutateAsync(clientToDelete.id);
+    setClientToDelete(null);
+  };
 
   return (
     <DashboardLayout>
@@ -15,7 +27,7 @@ const ClientsPage = () => {
           <h1 className="text-2xl font-semibold">Clients</h1>
 
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsCreateOpen(true)}
             className="bg-slate-900 text-white px-4 py-2 rounded"
           >
             New Client
@@ -36,6 +48,7 @@ const ClientsPage = () => {
                   <th className="p-3">Name</th>
                   <th className="p-3">Email</th>
                   <th className="p-3">Company</th>
+                  <th className="p-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,6 +59,14 @@ const ClientsPage = () => {
                     <td className="p-3">
                       {client.company ?? "-"}
                     </td>
+                    <td className="p-3 text-sm">
+                      <button
+                        onClick={() => setClientToDelete(client)}
+                        className="text-red-600 hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -54,9 +75,23 @@ const ClientsPage = () => {
         )}
       </div>
 
-      {isOpen && (
-        <Modal onClose={() => setIsOpen(false)}>
-          <CreateClientForm onClose={() => setIsOpen(false)} />
+      {/* CREATE */}
+      {isCreateOpen && (
+        <Modal onClose={() => setIsCreateOpen(false)}>
+          <CreateClientForm onClose={() => setIsCreateOpen(false)} />
+        </Modal>
+      )}
+
+      {/* DELETE CONFIRM */}
+      {clientToDelete && (
+        <Modal onClose={() => setClientToDelete(null)}>
+          <ConfirmDialog
+            title="Delete client"
+            description={`Are you sure you want to delete "${clientToDelete.name}"?`}
+            onCancel={() => setClientToDelete(null)}
+            onConfirm={handleDelete}
+            loading={deleteMutation.isPending}
+          />
         </Modal>
       )}
     </DashboardLayout>

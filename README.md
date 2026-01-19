@@ -1,73 +1,136 @@
-# React + TypeScript + Vite
+# Client / Project Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dashboard web tipo empresa para la gestión de clientes, con autenticación, control de acceso por roles y CRUD completo.
 
-Currently, two official plugins are available:
+Este proyecto forma parte de mi portafolio profesional, enfocado a mostrar cómo se construye una aplicación real de gestión interna (dashboard).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔐 Autenticación y seguridad
 
-## Expanding the ESLint configuration
+- Login con JWT (mock)
+- Persistencia de sesión
+- Logout
+- Protección de rutas
+- Control de acceso por roles
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 👥 Roles
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Admin**
+  - Acceso completo
+  - Gestión de clientes (CRUD)
+- **User**
+  - Acceso limitado
+  - Sin permisos sobre clientes
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 📋 Gestión de clientes (CRUD completo)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Listado de clientes
+- Crear cliente (modal + formulario validado)
+- Editar cliente (reutilizando formulario)
+- Eliminar cliente con confirmación
+- Búsqueda por nombre y email
+- Paginación client-side
+- Estados de loading y empty states
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🧱 UI / UX
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Layout tipo dashboard (Navbar + Sidebar)
+- Navegación con React Router
+- Modales accesibles
+- Diseño responsive
+- UX orientada a aplicaciones empresariales
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🧠 Stack tecnológico
+
+- **React**
+- **TypeScript**
+- **Vite**
+- **React Router**
+- **@tanstack/react-query**
+- **React Hook Form**
+- **Zod**
+- **Tailwind CSS**
+- **Axios**
+- **json-server** (API fake)
+- **JWT (mock auth)**
+
+---
+
+## 🏗️ Arquitectura del proyecto
+
+El proyecto sigue una arquitectura por features, común en aplicaciones reales:
+
+src/
+├── app/
+│ ├── providers/ # AuthProvider, QueryProvider
+│ └── router/ # Rutas protegidas y por rol
+│
+├── features/
+│ ├── auth/ # Login, hooks y lógica de auth
+│ └── clients/ # CRUD de clientes (api, hooks, forms)
+│
+├── components/
+│ ├── layout/ # DashboardLayout, Navbar, Sidebar
+│ └── ui/ # Modal, ConfirmDialog
+│
+├── services/ # Axios + interceptors
+├── types/ # Tipos globales (Client, User, etc.)
+├── utils/ # Constantes (roles)
+└── styles/
+
+
+Esta estructura facilita:
+- Escalabilidad
+- Separación de responsabilidades
+- Reutilización de lógica
+- Mantenimiento a largo plazo
+
+---
+
+## 🔑 Credenciales de prueba
+
+### Admin
+
+Email: admin@test.com
+
+Password: admin123
+
+### User
+
+Email: user@test.com
+
+Password: user123
+
+---
+
+## 🚀 Cómo ejecutar el proyecto en local
+
+### 1️⃣ Clonar el repositorio
+
+git clone https://github.com/delmocss/client-project-management-app.git
+cd client-project-management-app
+
+### 2️⃣ Instalar dependencias
+
+npm install
+
+### 3️⃣ Arrancar el frontend
+
+npm run dev
+
+### 4️⃣ Arrancar la API fake
+
+npm run server
+
+### La aplicación estará disponible en:
+
+http://localhost:5173
+
+### La API fake en:
+
+http://localhost:4000

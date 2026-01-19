@@ -12,7 +12,7 @@ const Sidebar = () => {
     "bg-slate-800 font-semibold";
 
   return (
-    <aside className="w-60 bg-slate-900 text-white p-4">
+    <aside className="w-60 bg-gradient-to-b from-slate-900 to-slate-800 text-white p-4 shadow-xl">
       <nav className="space-y-2">
         <NavLink
           to="/"

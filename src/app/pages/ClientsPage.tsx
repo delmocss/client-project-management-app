@@ -9,6 +9,9 @@ import { useDeleteClient } from "../../features/clients/hooks";
 import ClientForm from "../../features/clients/components/ClientForm";
 import type { Client } from "../../types/client";
 
+import { motion } from "framer-motion";
+
+
 const ClientsPage = () => {
     // 🔒 HOOKS (TODOS DENTRO DEL COMPONENTE)
     const { data: clients, isLoading, isError } = useClients();
@@ -48,14 +51,14 @@ const ClientsPage = () => {
 
     return (
         <DashboardLayout>
-            <div className="space-y-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: "easeOut" }} className="space-y-4">
                 {/* HEADER */}
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Clients</h1>
 
                     <button
                         onClick={() => setIsCreateOpen(true)}
-                        className="bg-slate-900 text-white px-4 py-2 rounded"
+                        className="bg-slate-900 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-slate-800 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg"
                     >
                         New Client
                     </button>
@@ -111,8 +114,9 @@ const ClientsPage = () => {
 
                                     <tr
                                         key={client.id}
-                                        className="border-t hover:bg-gray-50"
+                                        className="border-t transition-all duration-200 hover:bg-white hover:shadow-md hover:-translate-y-[1px]"
                                     >
+
                                         <td className="p-3">{client.name}</td>
                                         <td className="p-3">{client.email}</td>
                                         <td className="p-3">
@@ -121,13 +125,13 @@ const ClientsPage = () => {
                                         <td className="p-3 space-x-2 text-sm">
                                             <button
                                                 onClick={() => setClientToEdit(client)}
-                                                className="text-blue-600 hover:underline"
+                                                className="bg-slate-900 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-slate-800 hover:-translate-y-[1px] active:translate-y-0shadow-md hover:shadow-lg"
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 onClick={() => setClientToDelete(client)}
-                                                className="text-red-600 hover:underline"
+                                                className="bg-slate-900 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-slate-800 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg"
                                             >
                                                 Delete
                                             </button>
@@ -143,7 +147,7 @@ const ClientsPage = () => {
                         <button
                             disabled={currentPage === 1}
                             onClick={() => setCurrentPage((p) => p - 1)}
-                            className="px-3 py-1 border rounded disabled:opacity-50"
+                            className="bg-slate-900 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-slate-800 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg"
                         >
                             Prev
                         </button>
@@ -155,14 +159,14 @@ const ClientsPage = () => {
                         <button
                             disabled={currentPage === totalPages}
                             onClick={() => setCurrentPage((p) => p + 1)}
-                            className="px-3 py-1 border rounded disabled:opacity-50"
+                            className="bg-slate-900 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-slate-800 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg"
                         >
                             Next
                         </button>
                     </div>
                 )}
 
-            </div>
+            </motion.div>
 
             {/* CREATE */}
             {isCreateOpen && (

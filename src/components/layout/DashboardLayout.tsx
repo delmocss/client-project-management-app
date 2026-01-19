@@ -14,7 +14,8 @@ const DashboardLayout = ({ children }: Props) => {
       <div className="flex flex-1">
         <Sidebar />
 
-        <main className="flex-1 bg-gray-100 p-6 overflow-y-auto">
+        <main className="flex-1 bg-gradient-to-br from-slate-50 to-slate-200 p-6 overflow-y-auto">
+
           {children}
         </main>
       </div>

@@ -18,7 +18,7 @@ const Modal = ({ children, onClose }: ModalProps) => {
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl"
+        className="bg-white dark:bg-slate-800 rounded-xl p-6 w-full max-w-md shadow-2xl transition-colors"
       >
         {children}
       </motion.div>

@@ -5,14 +5,16 @@ import { router } from "./app/router";
 import { AuthProvider } from "./app/providers/AuthProvider";
 import { QueryProvider } from "./app/providers/QueryProvider";
 import "./styles/index.css";
+import { ThemeProvider } from "./app/providers/ThemeProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AuthProvider>
+    <ThemeProvider>
       <QueryProvider>
-        <RouterProvider router={router} />
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
       </QueryProvider>
-    </AuthProvider>
-
+    </ThemeProvider>
   </React.StrictMode>
 );

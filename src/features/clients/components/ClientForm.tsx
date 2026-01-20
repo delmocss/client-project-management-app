@@ -48,13 +48,13 @@ const ClientForm = ({ initialData, onClose }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h2 className="text-lg font-semibold">
+      <h2 className="text-lg font-semibold dark:text-white">
         {isEdit ? "Edit Client" : "New Client"}
       </h2>
 
       <div>
         <input
-          className="w-full border p-2 rounded"
+          className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Name"
           {...register("name")}
         />
@@ -67,7 +67,7 @@ const ClientForm = ({ initialData, onClose }: Props) => {
 
       <div>
         <input
-          className="w-full border p-2 rounded"
+          className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Email"
           {...register("email")}
         />
@@ -80,7 +80,7 @@ const ClientForm = ({ initialData, onClose }: Props) => {
 
       <div>
         <input
-          className="w-full border p-2 rounded"
+          className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Phone"
           {...register("phone")}
         />
@@ -88,7 +88,7 @@ const ClientForm = ({ initialData, onClose }: Props) => {
 
       <div>
         <input
-          className="w-full border p-2 rounded"
+          className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Company"
           {...register("company")}
         />
@@ -98,14 +98,14 @@ const ClientForm = ({ initialData, onClose }: Props) => {
         <button
           type="button"
           onClick={onClose}
-          className="px-4 py-2 text-sm"
+          className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-slate-900 text-white px-4 py-2 rounded disabled:opacity-50"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded disabled:opacity-50 transition-colors"
         >
           {isSubmitting
             ? "Saving..."

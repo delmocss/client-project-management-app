@@ -34,12 +34,12 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center bg-slate-900">
+    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-800 transition-colors">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white p-6 rounded w-80 space-y-4"
+        className="bg-white dark:bg-slate-800 p-6 rounded w-80 space-y-4 shadow-xl"
       >
-        <h1 className="text-xl font-semibold">Iniciar sesión</h1>
+        <h1 className="text-xl font-semibold dark:text-white">Iniciar sesión</h1>
 
         {serverError && (
           <p className="text-red-500 text-sm">{serverError}</p>
@@ -50,7 +50,7 @@ const LoginPage = () => {
           <input
             type="email"
             placeholder="Email"
-            className="w-full border p-2 rounded"
+            className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("email")}
           />
           {errors.email && (
@@ -65,7 +65,7 @@ const LoginPage = () => {
           <input
             type="password"
             placeholder="Contraseña"
-            className="w-full border p-2 rounded"
+            className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("password")}
           />
           {errors.password && (
@@ -78,7 +78,7 @@ const LoginPage = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="bg-slate-900 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:bg-slate-800 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg disabled:opacity-50"
         >
           {isSubmitting ? "Entrando..." : "Login"}
         </button>

@@ -59,6 +59,15 @@
       "id": 6
     }
   ],
-  "projects": [],
+  "projects": [
+    {
+      "name": "Website Redesign",
+      "description": "Redesign corporate website",
+      "status": "active",
+      "clientId": 1,
+      "createdAt": "2026-01-16T10:00:00.000Z",
+      "id": 1
+    }
+  ],
   "tasks": []
 }

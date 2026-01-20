@@ -5,24 +5,28 @@ const server = jsonServer.create();
 const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 
-// middlewares base
+// 🟢 MIDDLEWARES BASE
 server.use(middlewares);
+server.use(jsonServer.bodyParser);
 
-// 🔐 auth middleware
+// 🟢 BIND DEL ROUTER (CLAVE)
+server.db = router.db;
+
+// 🔐 AUTH (DESPUÉS DEL BIND)
 server.use(auth);
 
-// 🔥 ENDPOINT /users/me (YA AUTENTICADO)
+// 🔥 ENDPOINT USER PROFILE
 server.get("/users/me", (req, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "Not authenticated" });
   }
-
   res.json(req.user);
 });
 
-// router protegido
+// 🟢 ROUTER FINAL
 server.use(router);
 
+// 🟢 START SERVER
 server.listen(4000, () => {
   console.log("JSON Server running on http://localhost:4000");
 });

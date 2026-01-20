@@ -7,14 +7,16 @@ import { loginSchema } from "../schema";
 import type { LoginFormValues } from "../schema"; 
 import { useState } from "react";
 
+
 const LoginPage = () => {
   const { login, isAuthenticated } = useAuth();
   const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   });
@@ -23,9 +25,12 @@ const LoginPage = () => {
     setServerError("");
 
     try {
+      setLoading(true);
       await login(data.email, data.password);
     } catch {
       setServerError("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,6 +55,17 @@ const LoginPage = () => {
         >
           Sign in
         </motion.h1>
+
+        {import.meta.env.PROD && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="text-sm text-center text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-2 rounded border border-blue-200 dark:border-blue-800/50"
+          >
+            Demo mode enabled. Authentication is simulated for this live preview.
+          </motion.div>
+        )}
 
         {serverError && (
           <motion.p
@@ -122,10 +138,10 @@ const LoginPage = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           type="submit"
-          disabled={isSubmitting}
+          disabled={loading}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg disabled:opacity-50"
         >
-          {isSubmitting ? "Signing in..." : "Sign in"}
+          {loading ? "Signing in..." : "Sign in"}
         </motion.button>
       </motion.form>
     </div>

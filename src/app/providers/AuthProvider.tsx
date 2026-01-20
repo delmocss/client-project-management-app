@@ -13,7 +13,6 @@ interface User {
   role: "admin" | "user";
 }
 
-
 interface JwtPayload {
   sub: number;
 }
@@ -45,15 +44,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const token = await loginRequest(email, password);
+    // 🟢 DEMO MODE EN PRODUCCIÓN - Sin requests reales
+    if (import.meta.env.PROD) {
+      const demoUser: User = {
+        email: email || "demo@company.com",
+        role: "admin",
+      };
 
+      localStorage.setItem("token", "demo-token-" + Date.now());
+      localStorage.setItem("user", JSON.stringify(demoUser));
+      setUser(demoUser);
+      return;
+    }
+
+    // 🔴 LOGIN REAL SOLO EN LOCAL/DESARROLLO
+    const token = await loginRequest(email, password);
     localStorage.setItem("token", token);
 
-    // 🔥 decodificar token
+    // Decodificar token
     const decoded = jwtDecode<JwtPayload>(token);
     const userId = decoded.sub;
 
-    // 🔥 pedir usuario real
+    // Pedir usuario real
     const userData = await getUserById(userId);
 
     const user: User = {

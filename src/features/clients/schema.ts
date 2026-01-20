@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const clientSchema = z.object({
-  name: z.string().min(1, "El nombre es obligatorio"),
-  email: z.string().email("Email inválido"),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email"),
   phone: z.string().optional(),
   company: z.string().optional(),
 });

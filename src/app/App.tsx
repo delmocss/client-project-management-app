@@ -1,13 +1,10 @@
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '/vite.svg'
-import '../styles/index.css'
 import DashboardLayout from "../components/layout/DashboardLayout";
+import '../styles/index.css'
 
 function App() {
   return (
     <DashboardLayout>
-      <h1 className="text-2xl font-semibold">
+      <h1 className="text-2xl font-semibold dark:text-white">
         Welcome to the Dashboard
       </h1>
     </DashboardLayout>

@@ -1,11 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-import { getClients } from "./api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createClient } from "./api";
-import { deleteClient } from "./api";
-import { updateClient } from "./api";
-import type { Client } from "../../types/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getClients,
+  createClient,
+  deleteClient,
+  updateClient,
+} from "./api";
 import type { ClientFormValues } from "./schema";
+
+export const useClients = () => {
+  return useQuery({
+    queryKey: ["clients"],
+    queryFn: getClients,
+  });
+};
 
 export const useCreateClient = () => {
   const queryClient = useQueryClient();
@@ -18,14 +25,6 @@ export const useCreateClient = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["clients"] });
     },
-  });
-};
-
-
-export const useClients = () => {
-  return useQuery({
-    queryKey: ["clients"],
-    queryFn: getClients,
   });
 };
 

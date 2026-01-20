@@ -129,7 +129,7 @@
     {
       "name": "Marketing Campaign",
       "description": "Launch new marketing campaign for product X",
-      "status": "on-hold",
+      "status": "pending",
       "clientId": 3,
       "createdAt": "2026-01-16T13:00:00.000Z",
       "id": 4
@@ -161,7 +161,7 @@
     {
       "name": "SEO Optimization",
       "description": "Optimize website for search engines",
-      "status": "on-hold",
+      "status": "pending",
       "clientId": 6,
       "createdAt": "2026-01-16T17:00:00.000Z",
       "id": 8
@@ -193,7 +193,7 @@
     {
       "name": "API Development",
       "description": "Develop new APIs for third-party integrations",
-      "status": "on-hold",
+      "status": "pending",
       "clientId": 10,
       "createdAt": "2026-01-16T21:00:00.000Z",
       "id": 12

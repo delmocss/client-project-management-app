@@ -25,7 +25,7 @@ const LoginPage = () => {
     try {
       await login(data.email, data.password);
     } catch {
-      setServerError("Credenciales incorrectas");
+      setServerError("Invalid email or password");
     }
   };
 
@@ -48,7 +48,7 @@ const LoginPage = () => {
           transition={{ delay: 0.1 }}
           className="text-xl font-semibold dark:text-white"
         >
-          Iniciar sesión
+          Sign in
         </motion.h1>
 
         {serverError && (
@@ -96,7 +96,7 @@ const LoginPage = () => {
           className="space-y-1"
         >
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Contraseña
+            Password
           </label>
           <input
             type="password"
@@ -125,7 +125,7 @@ const LoginPage = () => {
           disabled={isSubmitting}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg disabled:opacity-50"
         >
-          {isSubmitting ? "Entrando..." : "Login"}
+          {isSubmitting ? "Signing in..." : "Sign in"}
         </motion.button>
       </motion.form>
     </div>

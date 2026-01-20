@@ -84,11 +84,11 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
         animate="visible"
       >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Project Name
+          Name
         </label>
         <input
           className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Name"
+          placeholder="Project name"
           {...register("name")}
         />
         {errors.name && (
@@ -113,7 +113,7 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
         </label>
         <textarea
           className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-          placeholder="Description (optional)"
+          placeholder="Project description (optional)"
           rows={3}
           {...register("description")}
         />
@@ -199,7 +199,7 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
           whileTap={{ scale: 0.95 }}
           type="button"
           onClick={onClose}
-          className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors"
+          className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Cancel
         </motion.button>

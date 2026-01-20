@@ -106,23 +106,40 @@ const ProjectsPage = () => {
 
         {/* LOADING */}
         {isLoading && (
-          <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 dark:text-gray-300 transition-colors">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 transition-colors"
+          >
             Loading projects...
-          </div>
+          </motion.div>
         )}
 
         {/* ERROR */}
         {isError && (
-          <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-red-600 dark:text-red-400 transition-colors">
-            Error loading projects
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-red-600 dark:text-red-400 transition-colors"
+          >
+            Error loading projects. Please try again.
+          </motion.div>
         )}
 
         {/* EMPTY */}
-        {!isLoading && projects && projects.length === 0 && (
-          <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-gray-500 dark:text-gray-400 transition-colors">
-            No projects found.
-          </div>
+        {!isLoading && !isError && projects && projects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-slate-800 p-8 rounded border border-slate-200 dark:border-slate-700 text-center transition-colors"
+          >
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
+              No projects found.
+            </p>
+            <p className="text-sm text-gray-400 dark:text-gray-500">
+              Create your first project by clicking "New Project" above.
+            </p>
+          </motion.div>
         )}
 
         {/* TABLE */}

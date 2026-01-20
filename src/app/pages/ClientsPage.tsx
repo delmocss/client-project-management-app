@@ -83,23 +83,40 @@ const ClientsPage = () => {
 
         {/* LOADING */}
         {isLoading && (
-          <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 dark:text-gray-300 transition-colors">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-gray-600 dark:text-gray-300 transition-colors"
+          >
             Loading clients...
-          </div>
+          </motion.div>
         )}
 
         {/* ERROR */}
         {isError && (
-          <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-red-600 dark:text-red-400 transition-colors">
-            Error loading clients
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-red-600 dark:text-red-400 transition-colors"
+          >
+            Error loading clients. Please try again.
+          </motion.div>
         )}
 
         {/* EMPTY */}
-        {!isLoading && clients && clients.length === 0 && (
-          <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-gray-500 dark:text-gray-400 transition-colors">
-            No clients found.
-          </div>
+        {!isLoading && !isError && clients && clients.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white dark:bg-slate-800 p-8 rounded border border-slate-200 dark:border-slate-700 text-center transition-colors"
+          >
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
+              No clients found.
+            </p>
+            <p className="text-sm text-gray-400 dark:text-gray-500">
+              Create your first client by clicking "New Client" above.
+            </p>
+          </motion.div>
         )}
 
         {/* TABLE */}
@@ -213,7 +230,7 @@ const ClientsPage = () => {
         <Modal onClose={() => setClientToDelete(null)}>
           <ConfirmDialog
             title="Delete client"
-            description={`Are you sure you want to delete "${clientToDelete.name}"?`}
+            description={`Are you sure you want to delete "${clientToDelete.name}"? This action cannot be undone.`}
             onCancel={() => setClientToDelete(null)}
             onConfirm={handleDelete}
             loading={deleteMutation.isPending}

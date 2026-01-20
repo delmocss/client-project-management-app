@@ -53,32 +53,37 @@ const ClientForm = ({ initialData, onClose }: Props) => {
       </h2>
 
       <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Name
+        </label>
         <input
           className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Name"
           {...register("name")}
         />
         {errors.name && (
-          <p className="text-red-500 text-xs">
-            {errors.name.message}
-          </p>
+          <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
         )}
       </div>
 
       <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Email
+        </label>
         <input
           className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Email"
           {...register("email")}
         />
         {errors.email && (
-          <p className="text-red-500 text-xs">
-            {errors.email.message}
-          </p>
+          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
         )}
       </div>
 
       <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Phone
+        </label>
         <input
           className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Phone"
@@ -87,6 +92,9 @@ const ClientForm = ({ initialData, onClose }: Props) => {
       </div>
 
       <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Company
+        </label>
         <input
           className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Company"

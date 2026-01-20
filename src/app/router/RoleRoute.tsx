@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useAuth } from "../../features/auth/hooks";
-import { ROLES } from "../../utils/constants";
 
 interface Props {
   children: ReactNode;

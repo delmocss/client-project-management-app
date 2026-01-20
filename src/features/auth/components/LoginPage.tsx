@@ -47,9 +47,12 @@ const LoginPage = () => {
 
         {/* EMAIL */}
         <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Email
+          </label>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="your@email.com"
             className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("email")}
           />
@@ -62,9 +65,12 @@ const LoginPage = () => {
 
         {/* PASSWORD */}
         <div className="space-y-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Contraseña
+          </label>
           <input
             type="password"
-            placeholder="Contraseña"
+            placeholder="••••••••"
             className="w-full border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("password")}
           />

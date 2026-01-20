@@ -3,40 +3,57 @@ import { motion } from "framer-motion";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Modal from "../../components/ui/Modal";
 import ConfirmDialog from "../../components/ui/ConfirmDialog";
-import ClientForm from "../../features/clients/components/ClientForm";
-import { useClients, useDeleteClient } from "../../features/clients/hooks";
-import type { Client } from "../../types/client";
+import { useProjects, useDeleteProject } from "../../features/projects/hooks";
+import { useClients } from "../../features/clients/hooks";
+import ProjectForm from "../../features/projects/components/ProjectForm";
+import type { Project } from "../../types/project";
 
-const ClientsPage = () => {
-  const { data: clients, isLoading, isError } = useClients();
-  const deleteMutation = useDeleteClient();
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
+
+const statusStyles: Record<string, string> = {
+  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
+  active: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
+  completed: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+};
+
+const ProjectsPage = () => {
+  const { data: projects, isLoading, isError } = useProjects();
+  const { data: clients } = useClients();
+  const deleteMutation = useDeleteProject();
 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [clientToEdit, setClientToEdit] = useState<Client | null>(null);
-  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
+  const [projectToEdit, setProjectToEdit] = useState<Project | null>(null);
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
 
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 8;
+
+  const getClientName = (clientId: number) =>
+    clients?.find((c) => c.id === clientId)?.name ?? "Unassigned";
 
   const handleDelete = async () => {
-    if (!clientToDelete) return;
-    await deleteMutation.mutateAsync(clientToDelete.id);
-    setClientToDelete(null);
+    if (!projectToDelete) return;
+    await deleteMutation.mutateAsync(projectToDelete.id);
+    setProjectToDelete(null);
   };
 
-  const filteredClients = clients?.filter((client) => {
+  const filteredProjects = projects?.filter((project) => {
     const term = search.toLowerCase();
     return (
-      client.name.toLowerCase().includes(term) ||
-      client.email.toLowerCase().includes(term)
+      project.name.toLowerCase().includes(term) ||
+      getClientName(project.clientId).toLowerCase().includes(term)
     );
   });
 
-  const totalItems = filteredClients?.length ?? 0;
+  const totalItems = filteredProjects?.length ?? 0;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
-  const paginatedClients = filteredClients?.slice(
+  const paginatedProjects = filteredProjects?.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
@@ -44,24 +61,27 @@ const ClientsPage = () => {
   return (
     <DashboardLayout>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        variants={pageVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 0.3 }}
         className="space-y-4"
       >
         {/* HEADER */}
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl font-semibold dark:text-white">Clients</h1>
+          <h1 className="text-2xl font-semibold dark:text-white">Projects</h1>
 
           <button
             onClick={() => setIsCreateOpen(true)}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg whitespace-nowrap"
           >
-            New Client
+            New Project
           </button>
+
           <input
             type="text"
-            placeholder="Search by name or email..."
+            placeholder="Search by name or client..."
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -74,26 +94,26 @@ const ClientsPage = () => {
         {/* LOADING */}
         {isLoading && (
           <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 dark:text-gray-300 transition-colors">
-            Loading clients...
+            Loading projects...
           </div>
         )}
 
         {/* ERROR */}
         {isError && (
           <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-red-600 dark:text-red-400 transition-colors">
-            Error loading clients
+            Error loading projects
           </div>
         )}
 
         {/* EMPTY */}
-        {!isLoading && clients && clients.length === 0 && (
+        {!isLoading && projects && projects.length === 0 && (
           <div className="bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 dark:border-slate-700 text-gray-500 dark:text-gray-400 transition-colors">
-            No clients found.
+            No projects found.
           </div>
         )}
 
         {/* TABLE */}
-        {clients && clients.length > 0 && (
+        {projects && projects.length > 0 && (
           <div className="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden transition-colors shadow-md">
             <table className="w-full text-sm">
               <thead className="bg-gray-100 dark:bg-slate-700 text-left border-b border-slate-200 dark:border-slate-600">
@@ -102,10 +122,13 @@ const ClientsPage = () => {
                     Name
                   </th>
                   <th className="p-3 font-semibold text-gray-900 dark:text-white">
-                    Email
+                    Client
                   </th>
                   <th className="p-3 font-semibold text-gray-900 dark:text-white">
-                    Company
+                    Status
+                  </th>
+                  <th className="p-3 font-semibold text-gray-900 dark:text-white">
+                    Created
                   </th>
                   <th className="p-3 font-semibold text-gray-900 dark:text-white">
                     Actions
@@ -113,29 +136,36 @@ const ClientsPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedClients?.map((client) => (
+                {paginatedProjects?.map((project) => (
                   <tr
-                    key={client.id}
+                    key={project.id}
                     className="border-t border-slate-200 dark:border-slate-700 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
-                    <td className="p-3 text-gray-900 dark:text-white">
-                      {client.name}
+                    <td className="p-3 font-medium text-gray-900 dark:text-white">
+                      {project.name}
                     </td>
                     <td className="p-3 text-gray-700 dark:text-gray-300">
-                      {client.email}
+                      {getClientName(project.clientId)}
                     </td>
-                    <td className="p-3 text-gray-700 dark:text-gray-300">
-                      {client.company ?? "-"}
+                    <td className="p-3">
+                      <span
+                        className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${statusStyles[project.status]}`}
+                      >
+                        {project.status}
+                      </span>
+                    </td>
+                    <td className="p-3 text-gray-600 dark:text-gray-400">
+                      {new Date(project.createdAt).toLocaleDateString()}
                     </td>
                     <td className="p-3 space-x-2 text-sm">
                       <button
-                        onClick={() => setClientToEdit(client)}
+                        onClick={() => setProjectToEdit(project)}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0"
                       >
                         Edit
                       </button>
                       <button
-                        onClick={() => setClientToDelete(client)}
+                        onClick={() => setProjectToDelete(project)}
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0"
                       >
                         Delete
@@ -177,27 +207,31 @@ const ClientsPage = () => {
       {/* CREATE */}
       {isCreateOpen && (
         <Modal onClose={() => setIsCreateOpen(false)}>
-          <ClientForm onClose={() => setIsCreateOpen(false)} />
+          <ProjectForm
+            clients={clients}
+            onClose={() => setIsCreateOpen(false)}
+          />
         </Modal>
       )}
 
       {/* EDIT */}
-      {clientToEdit && (
-        <Modal onClose={() => setClientToEdit(null)}>
-          <ClientForm
-            initialData={clientToEdit}
-            onClose={() => setClientToEdit(null)}
+      {projectToEdit && (
+        <Modal onClose={() => setProjectToEdit(null)}>
+          <ProjectForm
+            initialData={projectToEdit}
+            clients={clients}
+            onClose={() => setProjectToEdit(null)}
           />
         </Modal>
       )}
 
       {/* DELETE */}
-      {clientToDelete && (
-        <Modal onClose={() => setClientToDelete(null)}>
+      {projectToDelete && (
+        <Modal onClose={() => setProjectToDelete(null)}>
           <ConfirmDialog
-            title="Delete client"
-            description={`Are you sure you want to delete "${clientToDelete.name}"?`}
-            onCancel={() => setClientToDelete(null)}
+            title="Delete project"
+            description={`Are you sure you want to delete "${projectToDelete.name}"? This action cannot be undone.`}
+            onCancel={() => setProjectToDelete(null)}
             onConfirm={handleDelete}
             loading={deleteMutation.isPending}
           />
@@ -207,4 +241,4 @@ const ClientsPage = () => {
   );
 };
 
-export default ClientsPage;
+export default ProjectsPage;

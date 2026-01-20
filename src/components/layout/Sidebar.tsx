@@ -24,24 +24,26 @@ const Sidebar = () => {
         </NavLink>
 
         {user?.role === ROLES.ADMIN && (
-          <NavLink
-            to="/clients"
-            className={({ isActive }) =>
-              `${linkClass} ${isActive ? activeClass : ""}`
-            }
-          >
-            Clients
-          </NavLink>
-        )}
+          <>
+            <NavLink
+              to="/clients"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : ""}`
+              }
+            >
+              Clients
+            </NavLink>
 
-        <NavLink
-          to="/projects"
-          className={({ isActive }) =>
-            `${linkClass} ${isActive ? activeClass : ""}`
-          }
-        >
-          Projects
-        </NavLink>
+            <NavLink
+              to="/projects"
+              className={({ isActive }) =>
+                `${linkClass} ${isActive ? activeClass : ""}`
+              }
+            >
+              Projects
+            </NavLink>
+          </>
+        )}
       </nav>
     </aside>
   );

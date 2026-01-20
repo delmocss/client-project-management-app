@@ -7,7 +7,7 @@ export const getProjects = async (): Promise<Project[]> => {
 };
 
 export const createProject = async (
-  project: Omit<Project, "id">
+  project: Omit<Project, "id" | "createdAt"> & { createdAt?: string }
 ): Promise<Project> => {
   const { data } = await api.post<Project>("/projects", project);
   return data;
@@ -15,7 +15,7 @@ export const createProject = async (
 
 export const updateProject = async (
   id: number,
-  project: Partial<Project>
+  project: Partial<Omit<Project, "id" | "createdAt">>
 ): Promise<Project> => {
   const { data } = await api.patch<Project>(`/projects/${id}`, project);
   return data;

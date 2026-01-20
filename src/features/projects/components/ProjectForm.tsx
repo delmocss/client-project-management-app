@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projectSchema } from "../schema";
@@ -14,6 +15,15 @@ interface Props {
 
 const ProjectForm = ({ initialData, clients, onClose }: Props) => {
   const isEdit = Boolean(initialData);
+
+  const fieldVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1 },
+    }),
+  };
 
   const {
     register,
@@ -51,12 +61,28 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h2 className="text-lg font-semibold dark:text-white">
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <motion.h2
+        className="text-lg font-semibold dark:text-white"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
         {isEdit ? "Edit Project" : "New Project"}
-      </h2>
+      </motion.h2>
 
-      <div>
+      <motion.div
+        custom={0}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Project Name
         </label>
@@ -66,11 +92,22 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
           {...register("name")}
         />
         {errors.name && (
-          <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+          <motion.p
+            className="text-red-500 text-xs mt-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {errors.name.message}
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        custom={1}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Description
         </label>
@@ -81,13 +118,22 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
           {...register("description")}
         />
         {errors.description && (
-          <p className="text-red-500 text-xs mt-1">
+          <motion.p
+            className="text-red-500 text-xs mt-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             {errors.description.message}
-          </p>
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        custom={2}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Client
         </label>
@@ -103,13 +149,22 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
           ))}
         </select>
         {errors.clientId && (
-          <p className="text-red-500 text-xs mt-1">
+          <motion.p
+            className="text-red-500 text-xs mt-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             {errors.clientId.message}
-          </p>
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        custom={3}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Status
         </label>
@@ -122,27 +177,43 @@ const ProjectForm = ({ initialData, clients, onClose }: Props) => {
           <option value="completed">Completed</option>
         </select>
         {errors.status && (
-          <p className="text-red-500 text-xs mt-1">{errors.status.message}</p>
+          <motion.p
+            className="text-red-500 text-xs mt-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            {errors.status.message}
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <div className="flex justify-end gap-2 pt-2">
-        <button
+      <motion.div
+        custom={4}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex justify-end gap-2 pt-2"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           type="button"
           onClick={onClose}
           className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors"
         >
           Cancel
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           type="submit"
           disabled={isSubmitting}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded disabled:opacity-50 transition-colors"
         >
           {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Create"}
-        </button>
-      </div>
-    </form>
+        </motion.button>
+      </motion.div>
+    </motion.form>
   );
 };
 

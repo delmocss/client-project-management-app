@@ -50,16 +50,26 @@ const ClientsPage = () => {
         className="space-y-4"
       >
         {/* HEADER */}
-        <div className="flex items-center justify-between gap-4">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="flex items-center justify-between gap-4"
+        >
           <h1 className="text-2xl font-semibold dark:text-white">Clients</h1>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsCreateOpen(true)}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0 shadow-md hover:shadow-lg whitespace-nowrap"
           >
             New Client
-          </button>
-          <input
+          </motion.button>
+          <motion.input
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
             type="text"
             placeholder="Search by name or email..."
             value={search}
@@ -69,7 +79,7 @@ const ClientsPage = () => {
             }}
             className="flex-1 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white p-2 rounded placeholder-slate-400 dark:placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
+        </motion.div>
 
         {/* LOADING */}
         {isLoading && (
@@ -113,9 +123,12 @@ const ClientsPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedClients?.map((client) => (
-                  <tr
+                {paginatedClients?.map((client, idx) => (
+                  <motion.tr
                     key={client.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
                     className="border-t border-slate-200 dark:border-slate-700 transition-all duration-200 hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
                     <td className="p-3 text-gray-900 dark:text-white">
@@ -128,20 +141,24 @@ const ClientsPage = () => {
                       {client.company ?? "-"}
                     </td>
                     <td className="p-3 space-x-2 text-sm">
-                      <button
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => setClientToEdit(client)}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0"
                       >
                         Edit
-                      </button>
-                      <button
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={() => setClientToDelete(client)}
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded transition-all duration-200 hover:-translate-y-[1px] active:translate-y-0"
                       >
                         Delete
-                      </button>
+                      </motion.button>
                     </td>
-                  </tr>
+                  </motion.tr>
                 ))}
               </tbody>
             </table>
@@ -182,7 +199,7 @@ const ClientsPage = () => {
       )}
 
       {/* EDIT */}
-      {clientToEdit && (
+      {clientToEdit !== null && (
         <Modal onClose={() => setClientToEdit(null)}>
           <ClientForm
             initialData={clientToEdit}
@@ -192,7 +209,7 @@ const ClientsPage = () => {
       )}
 
       {/* DELETE */}
-      {clientToDelete && (
+      {clientToDelete !== null && (
         <Modal onClose={() => setClientToDelete(null)}>
           <ConfirmDialog
             title="Delete client"

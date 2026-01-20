@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { clientSchema } from "../schema";
 import type { ClientFormValues } from "../schema";
 import { useCreateClient } from "../hooks";
@@ -46,13 +47,36 @@ const ClientForm = ({ initialData, onClose }: Props) => {
     onClose();
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <h2 className="text-lg font-semibold dark:text-white">
-        {isEdit ? "Edit Client" : "New Client"}
-      </h2>
+  const fieldVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.1 },
+    }),
+  };
 
-      <div>
+  return (
+    <motion.form
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4"
+    >
+      <motion.h2
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="text-lg font-semibold dark:text-white"
+      >
+        {isEdit ? "Edit Client" : "New Client"}
+      </motion.h2>
+
+      <motion.div
+        custom={0}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Name
         </label>
@@ -62,11 +86,22 @@ const ClientForm = ({ initialData, onClose }: Props) => {
           {...register("name")}
         />
         {errors.name && (
-          <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-red-500 text-xs mt-1"
+          >
+            {errors.name.message}
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        custom={1}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Email
         </label>
@@ -76,11 +111,22 @@ const ClientForm = ({ initialData, onClose }: Props) => {
           {...register("email")}
         />
         {errors.email && (
-          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-red-500 text-xs mt-1"
+          >
+            {errors.email.message}
+          </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        custom={2}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Phone
         </label>
@@ -89,9 +135,14 @@ const ClientForm = ({ initialData, onClose }: Props) => {
           placeholder="Phone"
           {...register("phone")}
         />
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        custom={3}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Company
         </label>
@@ -100,17 +151,27 @@ const ClientForm = ({ initialData, onClose }: Props) => {
           placeholder="Company"
           {...register("company")}
         />
-      </div>
+      </motion.div>
 
-      <div className="flex justify-end gap-2">
-        <button
+      <motion.div
+        custom={4}
+        variants={fieldVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex justify-end gap-2 pt-2"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           type="button"
           onClick={onClose}
           className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors"
         >
           Cancel
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           type="submit"
           disabled={isSubmitting}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded disabled:opacity-50 transition-colors"
@@ -120,9 +181,9 @@ const ClientForm = ({ initialData, onClose }: Props) => {
             : isEdit
             ? "Save changes"
             : "Create"}
-        </button>
-      </div>
-    </form>
+        </motion.button>
+      </motion.div>
+    </motion.form>
   );
 };
 

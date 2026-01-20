@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import { useAuth } from "../../features/auth/hooks";
+import { useAuthContext } from "../../app/providers/AuthProvider";
 import { useProjects } from "../../features/projects/hooks";
 import { useClients } from "../../features/clients/hooks";
 
@@ -73,7 +73,7 @@ const StatCard = ({
 };
 
 const DashboardPage = () => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
   const { data: projects } = useProjects();
   const { data: clients } = useClients();
 

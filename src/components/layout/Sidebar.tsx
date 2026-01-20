@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../features/auth/hooks";
+import { useAuthContext } from "../../app/providers/AuthProvider";
 import { ROLES } from "../../utils/constants";
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const linkClass =
     "block px-3 py-2 rounded hover:bg-slate-700 transition-colors";

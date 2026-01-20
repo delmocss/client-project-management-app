@@ -1,4 +1,4 @@
-import { useAuth } from "../hooks";
+import { useAuthContext } from "../../../app/providers/AuthProvider";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,7 @@ import { useState } from "react";
 
 
 const LoginPage = () => {
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated } = useAuthContext();
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
 

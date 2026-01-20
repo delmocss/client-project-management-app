@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { useAuth } from "../../features/auth/hooks";
+import { useAuthContext } from "../../app/providers/AuthProvider";
 import { useTheme } from "../../app/providers/ThemeProvider";
 
 
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthContext();
   const { theme, toggleTheme } = useTheme();
 
   return (

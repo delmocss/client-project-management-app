@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
-import { useAuth } from "../../features/auth/hooks";
+import { useAuthContext } from "../../app/providers/AuthProvider";
 
 interface Props {
   children: ReactNode;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const RoleRoute = ({ children, allowedRoles }: Props) => {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   if (!user) {
     return <Navigate to="/login" replace />;

@@ -1,13 +1,16 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+
 import ProtectedRoute from "./ProtectedRoute";
 import RoleRoute from "./RoleRoute";
+
 import DashboardPage from "../pages/DashboardPage";
 import ClientsPage from "../pages/ClientsPage";
 import ProjectsPage from "../pages/ProjectsPage";
 import LoginPage from "../../features/auth/components/LoginPage";
+
 import { ROLES } from "../../utils/constants";
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
@@ -40,4 +43,10 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />,
+  },
 ]);
+
+export default router;

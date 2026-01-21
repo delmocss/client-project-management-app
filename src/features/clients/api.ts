@@ -1,5 +1,6 @@
 import api from "../../services/api";
 import type { Client } from "../../types/client";
+import { mockClients } from "../../mocks/clients";
 
 export const getClients = async (): Promise<Client[]> => {
   const { data } = await api.get<Client[]>("/clients");
@@ -9,6 +10,9 @@ export const getClients = async (): Promise<Client[]> => {
 export const createClient = async (
   client: Omit<Client, "id" | "createdAt">
 ): Promise<Client> => {
+  if (import.meta.env.PROD) {
+    return mockClients[0] as Client;
+  }
   const { data } = await api.post<Client>("/clients", {
     ...client,
     createdAt: new Date().toISOString(),

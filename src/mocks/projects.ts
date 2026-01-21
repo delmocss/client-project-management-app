@@ -1,0 +1,122 @@
+export const mockProjects = [
+  {
+      "name": "Website Redesign",
+      "description": "Redesign corporate website",
+      "status": "active",
+      "clientId": 1,
+      "createdAt": "2026-01-16T10:00:00.000Z",
+      "id": 1
+    },
+    {
+      "name": "Mobile App Development",
+      "description": "Develop a mobile app for e-commerce",
+      "status": "completed",
+      "clientId": 2,
+      "createdAt": "2026-01-16T11:00:00.000Z",
+      "id": 2
+    },
+    {
+      "name": "Cloud Migration",
+      "description": "Migrate services to cloud infrastructure",
+      "status": "active",
+      "clientId": 3,
+      "createdAt": "2026-01-16T12:00:00.000Z",
+      "id": 3
+    },
+    {
+      "name": "Marketing Campaign",
+      "description": "Launch new marketing campaign for product X",
+      "status": "pending",
+      "clientId": 3,
+      "createdAt": "2026-01-16T13:00:00.000Z",
+      "id": 4
+    },
+    {
+      "name": "Data Analytics Platform",
+      "description": "Build a data analytics platform for internal use",
+      "status": "active",
+      "clientId": 5,
+      "createdAt": "2026-01-16T14:00:00.000Z",
+      "id": 5
+    },
+    {
+      "name": "Customer Support System",
+      "description": "Implement a new customer support ticketing system",
+      "status": "completed",
+      "clientId": 6,
+      "createdAt": "2026-01-16T15:00:00.000Z",
+      "id": 6
+    },
+    {
+      "name": "Social Media Integration",
+      "description": "Integrate social media platforms into our services",
+      "status": "active",
+      "clientId": 6,
+      "createdAt": "2026-01-16T16:00:00.000Z",
+      "id": 7
+    },
+    {
+      "name": "SEO Optimization",
+      "description": "Optimize website for search engines",
+      "status": "pending",
+      "clientId": 6,
+      "createdAt": "2026-01-16T17:00:00.000Z",
+      "id": 8
+    },
+    {
+      "name": "Product Launch",
+      "description": "Launch new product line in Q3",
+      "status": "active",
+      "clientId": 7,
+      "createdAt": "2026-01-16T18:00:00.000Z",
+      "id": 9
+    },
+    {
+      "name": "Internal Training Program",
+      "description": "Develop training materials for new hires",
+      "status": "completed",
+      "clientId": 8,
+      "createdAt": "2026-01-16T19:00:00.000Z",
+      "id": 10
+    },
+    {
+      "name": "Security Audit",
+      "description": "Conduct a comprehensive security audit",
+      "status": "active",
+      "clientId": 9,
+      "createdAt": "2026-01-16T20:00:00.000Z",
+      "id": 11
+    },
+    {
+      "name": "API Development",
+      "description": "Develop new APIs for third-party integrations",
+      "status": "pending",
+      "clientId": 10,
+      "createdAt": "2026-01-16T21:00:00.000Z",
+      "id": 12
+    },
+    {
+      "name": "DevOps Implementation",
+      "description": "Implement DevOps practices across teams",
+      "status": "active",
+      "clientId": 11,
+      "createdAt": "2026-01-16T22:00:00.000Z",
+      "id": 13
+    },
+    {
+      "name": "UX Research",
+      "description": "Conduct user experience research for new features",
+      "status": "completed",
+      "clientId": 12,
+      "createdAt": "2026-01-16T23:00:00.000Z",
+      "id": 14
+    },
+    {
+      "name": "Performance Optimization",
+      "description": "Optimize application performance and load times",
+      "status": "active",
+      "clientId": 4,
+      "createdAt": "2026-01-17T00:00:00.000Z",
+      "id": 15
+    },
+];

@@ -1,7 +1,11 @@
 import api from "../../services/api";
 import type { Project } from "../../types/project";
+import { mockProjects } from "../../mocks/projects";
 
 export const getProjects = async (): Promise<Project[]> => {
+  if (import.meta.env.PROD) {
+    return mockProjects as Project[];
+  }
   const { data } = await api.get<Project[]>("/projects");
   return data;
 };

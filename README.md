@@ -216,6 +216,7 @@ npm run server
 
 - **Frontend:** http://localhost:5173
 - **API Simulada:** http://localhost:4000
+- **Modo Demo:** https://client-project-management-app.vercel.app
 
 ### Scripts Disponibles
 
